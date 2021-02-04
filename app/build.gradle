@@ -89,4 +89,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_jupiter_version"
+
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-rc01'
+    implementation "androidx.activity:activity-ktx:1.1.0"
 }
