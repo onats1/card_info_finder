@@ -82,4 +82,11 @@ dependencies {
 
     def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
+    def junit_jupiter_version = "5.6.0"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_jupiter_version"
 }

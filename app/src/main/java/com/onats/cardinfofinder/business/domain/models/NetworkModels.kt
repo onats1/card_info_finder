@@ -3,7 +3,7 @@ package com.onats.cardinfofinder.business.domain.models
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Number(
+data class CardNumber(
     val length: Int?,
     val luhn: Boolean?
 )
@@ -21,13 +21,13 @@ data class Country(
 
 @JsonClass(generateAdapter = true)
 data class CardInformationResponse(
-        val bank: Bank?,
-        val brand: String?,
-        val country: Country?,
-        val number: Number?,
-        val prepaid: Boolean?,
-        val scheme: String?,
-        val type: String?
+    val bank: Bank?,
+    val brand: String?,
+    val country: Country?,
+    val cardNumber: CardNumber?,
+    val prepaid: Boolean?,
+    val scheme: String?,
+    val type: String?
 )
 
 @JsonClass(generateAdapter = true)
