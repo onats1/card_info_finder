@@ -7,4 +7,5 @@
     <string name="country">Country</string>
     <string name="user_prompt">Please enter at least the first 6 digits of your card.</string>
     <string name="error_message_number_length">Enter at least 6 characters</string>
+    <string name="search_cant_be_empty">Search field cannot be empty.</string>
 </resources>

@@ -1,8 +1,8 @@
 package com.onats.cardinfofinder.framework
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -14,7 +14,6 @@ import com.onats.cardinfofinder.databinding.ActivityMainBinding
 import com.onats.cardinfofinder.framework.di.AppComponent
 import com.onats.cardinfofinder.framework.di.ViewModelFactory
 import com.onats.cardinfofinder.framework.ui.CardDetailsViewModel
-import com.onats.cardinfofinder.framework.ui.states.CardInformationViewStates
 import javax.inject.Inject
 
 class MainActivity: AppCompatActivity() {
@@ -40,17 +39,18 @@ class MainActivity: AppCompatActivity() {
                     } else {
                         Snackbar.make(binding.root, getString(R.string.error_message_number_length), Snackbar.LENGTH_SHORT).show()
                     }
-                }
+                }?: Snackbar.make(binding.root, getString(R.string.search_cant_be_empty), Snackbar.LENGTH_SHORT).show()
+
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                return false
+                return true
             }
 
         })
         binding.searchView.setOnCloseListener {
-            binding.cardDetails = CardInformationViewStates()
+            viewModel.resetState()
             true
         }
 
@@ -66,6 +66,10 @@ class MainActivity: AppCompatActivity() {
             dataState.data?.let { data ->
                 binding.cardDetailsContainer.visibility = View.VISIBLE
                 binding.cardDetails = data
+                ObjectAnimator.ofFloat(binding.cardDetails, "translationY", 0F).apply {
+                    duration = 2000
+                    start()
+                }
             }
             dataState.error?.let { error ->
                 Snackbar.make(binding.root, error.errorMessage, Snackbar.LENGTH_SHORT).show()

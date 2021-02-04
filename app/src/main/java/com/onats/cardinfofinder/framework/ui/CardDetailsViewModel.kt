@@ -30,4 +30,8 @@ constructor(
             }
         }
     }
+
+    fun resetState() {
+        _viewState.value = DataState.data(CardInformationViewStates())
+    }
 }

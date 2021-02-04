@@ -15,7 +15,7 @@ class GetCardDetailsUseCase
 @Inject
 constructor(
     private val repository: CardInformationRepository
-) {
+): DataMapper<CardInformationResponse, CardInformationViewStates> {
 
     fun getCardDetails(bin: String): Flow<DataState<CardInformationViewStates, CardInformationErrorState>> = flow {
 
@@ -24,12 +24,7 @@ constructor(
         cardDetailsResponse.collect { cardDetails ->
             cardDetails.data?.let { cardInformationResponse ->
                 emit(DataState.data(
-                    CardInformationViewStates(
-                        cardBrand = cardInformationResponse.brand,
-                        bank = cardInformationResponse.bank,
-                        cardType = cardInformationResponse.type,
-                        country = cardInformationResponse.country
-                    )
+                    mapObject(cardInformationResponse)
                 ))
             }
             cardDetails.error?.let { networkError ->
@@ -40,6 +35,15 @@ constructor(
                 ))
             }
         }
+    }
+
+    override fun mapObject(data: CardInformationResponse): CardInformationViewStates {
+        return CardInformationViewStates(
+            cardBrand = data.brand?:"Not Available",
+            bank = data.bank,
+            cardType = data.type?:"Not Available",
+            country = data.country
+        )
     }
 
 }
