@@ -1,6 +1,5 @@
 package com.onats.cardinfofinder.business.interactors
 
-import android.util.Log
 import com.onats.cardinfofinder.business.data.CardInformationRepository
 import com.onats.cardinfofinder.business.domain.models.CardInformationNetworkErrorModel
 import com.onats.cardinfofinder.business.domain.models.CardInformationResponse
