@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
@@ -14,6 +14,7 @@ import com.onats.cardinfofinder.databinding.ActivityMainBinding
 import com.onats.cardinfofinder.framework.di.AppComponent
 import com.onats.cardinfofinder.framework.di.ViewModelFactory
 import com.onats.cardinfofinder.framework.ui.CardDetailsViewModel
+import com.onats.cardinfofinder.util.EspressoIdlingResource
 import javax.inject.Inject
 
 class MainActivity: AppCompatActivity() {
@@ -31,27 +32,23 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         appComponent.inject(this)
-        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                p0?.let { searchQuery ->
-                    if (searchQuery.length >= 6) {
-                        viewModel.getCardDetails(searchQuery)
-                    } else {
-                        Snackbar.make(binding.root, getString(R.string.error_message_number_length), Snackbar.LENGTH_SHORT).show()
-                    }
-                }?: Snackbar.make(binding.root, getString(R.string.search_cant_be_empty), Snackbar.LENGTH_SHORT).show()
-
-                return false
+        binding.searchButton.setOnClickListener {
+            val number = binding.numberInput.text.toString()
+            viewModel.getCardDetails(number)
+            EspressoIdlingResource.increment()
+        }
+        binding.numberInput.doOnTextChanged { text, _, _, _ ->
+            when {
+                text.isNullOrEmpty() -> {
+                    binding.numberInput.error = getString(R.string.empty_field_error)
+                }
+                text.isEmpty() -> {
+                    viewModel.resetState()
+                }
+                else -> {
+                    viewModel.getCardDetails(text.toString())
+                }
             }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                return true
-            }
-
-        })
-        binding.searchView.setOnCloseListener {
-            viewModel.resetState()
-            true
         }
 
         viewModel.viewState.observe(this) { dataState ->
@@ -64,14 +61,12 @@ class MainActivity: AppCompatActivity() {
                 }
             }
             dataState.data?.let { data ->
+                EspressoIdlingResource.decrement()
                 binding.cardDetailsContainer.visibility = View.VISIBLE
                 binding.cardDetails = data
-                ObjectAnimator.ofFloat(binding.cardDetails, "translationY", 0F).apply {
-                    duration = 2000
-                    start()
-                }
             }
             dataState.error?.let { error ->
+                EspressoIdlingResource.decrement()
                 Snackbar.make(binding.root, error.errorMessage, Snackbar.LENGTH_SHORT).show()
             }
         }

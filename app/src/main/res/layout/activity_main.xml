@@ -28,27 +28,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/numberInputLayout"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/four_corner_curved_bg"
-            android:backgroundTint="@color/bg_search"
-            android:inputType="number"
-            android:paddingStart="16dp"
-            android:paddingLeft="24dp"
-            android:paddingEnd="16dp"
-            android:paddingRight="0dp"
-            app:defaultQueryHint="Enter card number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_prompt"
-            app:queryHint="Search"
-            app:searchIcon="@drawable/ic_baseline_search_24"
-            app:submitBackground="@color/bg_search" />
+            app:layout_constraintTop_toBottomOf="@+id/user_prompt">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/numberInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/four_corner_curved_bg"
+                android:backgroundTint="@color/bg_search"
+                android:inputType="number"
+                android:paddingStart="16dp"
+                android:paddingLeft="24dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="0dp"
+                app:defaultQueryHint="Enter card number"
+                app:queryHint="Search"
+                app:searchIcon="@drawable/ic_baseline_search_24"
+                app:submitBackground="@color/bg_search" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_details_container"
@@ -177,6 +186,17 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="24dp"
+            android:text="Search"
+            app:layout_constraintTop_toBottomOf="@id/numberInputLayout"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="@android:style/Widget.Material.ProgressBar.Large"
@@ -187,7 +207,7 @@
             android:indeterminate="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView" />
+            app:layout_constraintTop_toBottomOf="@+id/searchButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

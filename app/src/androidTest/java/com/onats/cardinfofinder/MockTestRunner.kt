@@ -15,6 +15,6 @@ class MockTestRunner: AndroidJUnitRunner() {
         className: String?,
         context: Context?
     ): Application {
-        return super.newApplication(cl, FakeTestCardInfoApp::class.java.name, context)
+        return super.newApplication(cl, TestCardInfoApp::class.java.name, context)
     }
 }
