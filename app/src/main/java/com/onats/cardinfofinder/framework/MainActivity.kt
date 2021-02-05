@@ -1,6 +1,5 @@
 package com.onats.cardinfofinder.framework
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -17,7 +16,7 @@ import com.onats.cardinfofinder.framework.ui.CardDetailsViewModel
 import com.onats.cardinfofinder.util.EspressoIdlingResource
 import javax.inject.Inject
 
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val appComponent: AppComponent get() = (application as CardInfoFinderApp).appComponent
 
@@ -34,19 +33,25 @@ class MainActivity: AppCompatActivity() {
         appComponent.inject(this)
         binding.searchButton.setOnClickListener {
             val number = binding.numberInput.text.toString()
-            viewModel.getCardDetails(number)
+            when {
+                number.isEmpty() -> {
+                    binding.numberInput.error = getString(R.string.empty_field_error)
+                }
+                number.length < 6 -> {
+                    binding.numberInput.error = getString(R.string.error_message_number_length)
+                }
+                else -> {
+                    viewModel.getCardDetails(number)
+                }
+            }
             EspressoIdlingResource.increment()
         }
         binding.numberInput.doOnTextChanged { text, _, _, _ ->
             when {
                 text.isNullOrEmpty() -> {
-                    binding.numberInput.error = getString(R.string.empty_field_error)
-                }
-                text.isEmpty() -> {
-                    viewModel.resetState()
-                }
-                else -> {
-                    viewModel.getCardDetails(text.toString())
+                    if (binding.cardDetailsContainer.visibility == View.VISIBLE) {
+                        viewModel.resetState()
+                    }
                 }
             }
         }
