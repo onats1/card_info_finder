@@ -51,10 +51,7 @@
                 android:paddingLeft="24dp"
                 android:paddingEnd="16dp"
                 android:paddingRight="0dp"
-                app:defaultQueryHint="Enter card number"
-                app:queryHint="Search"
-                app:searchIcon="@drawable/ic_baseline_search_24"
-                app:submitBackground="@color/bg_search" />
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
 

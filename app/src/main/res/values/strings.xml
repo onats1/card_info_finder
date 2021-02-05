@@ -9,4 +9,5 @@
     <string name="error_message_number_length">Enter at least 6 characters</string>
     <string name="search_cant_be_empty">Search field cannot be empty.</string>
     <string name="empty_field_error">Please enter a valid number.</string>
+    <string name="card_number">Card Number</string>
 </resources>
