@@ -17,4 +17,8 @@ The framework section contains android specific code: These include the View Mod
 #Error Handling
 Network errors are handled at the Repository layer and then propagated to the Use Case which converts the error to a user-friendly error message.
 
+#Usage
+The app collects a user input using the soft keyboard set to accept only numeric characters. This is to reduce the possibility of errors caused by entering non-numberic characters. When the user clicks on the search button, the app checks for errors succh as an empty input or an input with length less than 6 characters. If all conditions are met, 
+the request is sent to the server and a loading animation is displayed. Upon getting a response, the loading animation is hidden and the card details related to the user input is displayed.
+
 
